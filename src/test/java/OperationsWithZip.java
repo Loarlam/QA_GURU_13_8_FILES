@@ -33,4 +33,11 @@ public class OperationsWithZip {
             assertThat(zipEntry.getName().length()).isGreaterThan(0);
         }
     }
+
+    @Test
+    @DisplayName("Проверка содержимого zip-архива")
+    void checkingTheZipContents ()
+    {
+
+    }
 }
