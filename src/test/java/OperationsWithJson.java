@@ -5,7 +5,6 @@ import pojoForJSON.Book;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 
 public class OperationsWithJson {
     private String pathToJson = "src/test/resources/json/Book.json";

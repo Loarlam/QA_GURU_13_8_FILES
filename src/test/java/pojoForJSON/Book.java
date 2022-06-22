@@ -49,7 +49,7 @@ public class Book {
         this.price = price;
     }
 
-    static class Detail{
+    static class Detail {
         private String publisher;
         private int publication_Year;
         private long isbn;
@@ -97,7 +97,7 @@ public class Book {
         }
     }
 
-    static class Price{
+    static class Price {
         private String type;
         private double cost;
 
