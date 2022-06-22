@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -21,7 +23,15 @@ public class OperationsWithZip {
 
     @Test
     @DisplayName("Создание zip-файла с загрузкой оного в resource")
-    void insertingFilesToZip() throws IOException {
+    void insertingFilesToZip() throws IOException, InterruptedException {
+        if (Files.exists(Paths.get(pathToZip + "3in1.zip"))) {
+            try {
+                Files.delete(Paths.get(pathToZip + "3in1.zip"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         String[] filePathNames = new File(pathToFiles).list();
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(pathToZip + "3in1.zip");
