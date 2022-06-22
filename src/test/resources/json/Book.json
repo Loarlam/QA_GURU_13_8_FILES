@@ -1,22 +1,22 @@
 {
-  "Title": "The Cuckoo's Calling",
-  "Author": "Robert Galbraith",
-  "Genre": "classic crime novel",
-  "Detail": {
-    "Publisher": "Little Brown",
-    "Publication_Year": 2013,
-    "ISBN-13": 9781408704004,
-    "Language": "English",
-    "Pages": 494
+  "title": "The Cuckoo's Calling",
+  "author": "Robert Galbraith",
+  "genre": "classic crime novel",
+  "detail": {
+    "publisher": "Little Brown",
+    "publication_Year": 2013,
+    "isbn": 9781408704004,
+    "language": "English",
+    "pages": 494
   },
-  "Price": [
+  "price": [
     {
       "type": "Hardcover",
-      "price": 16.65
+      "cost": 16.65
     },
     {
       "type": "Kidle Edition",
-      "price": 7.03
+      "cost": 7.03
     }
   ]
 }
