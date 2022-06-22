@@ -1,13 +1,23 @@
-import org.junit.jupiter.api.*;
+import com.codeborne.pdftest.PDF;
+import com.codeborne.xlstest.XLS;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.util.zip.*;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OperationsWithZip {
     private String pathToFiles = "src/test/resources/files/",
-            pathToZip = "src/test/resources/zip/";
+            pathToZip = "src/test/resources/zip/",
+            pathToPrepackageFile = "src/test/resources/zip/forUnzip.zip";
 
     @Test
     @DisplayName("Создание zip-файла с загрузкой оного в resource")
@@ -36,8 +46,29 @@ public class OperationsWithZip {
 
     @Test
     @DisplayName("Проверка содержимого zip-архива")
-    void checkingTheZipContents ()
-    {
-
+    void checkingTheZipContents() throws IOException, CsvException {
+        try (ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(pathToPrepackageFile))) {
+            ZipEntry entry;
+            while ((entry = zipInputStream.getNextEntry()) != null) {
+                switch (entry.getName().substring(entry.getName().lastIndexOf('.'))) {
+                    case ".pdf":
+                        PDF pdf = new PDF(zipInputStream);
+                        assertThat(pdf.text).contains("Rebum dolor invidunt sed dolor sea wisi");
+                        break;
+                    case ".xlsx":
+                        XLS xls = new XLS(zipInputStream);
+                        assertThat(xls.excel.getSheetAt(0)
+                                .getRow(1)
+                                .getCell(1)
+                                .getStringCellValue()).contains("Люк Бессон");
+                        break;
+                    case ".csv":
+                        CSVReader csvFileReader = new CSVReader(new InputStreamReader(zipInputStream, UTF_8));
+                        List<String[]> csvList = csvFileReader.readAll();
+                        assertThat(csvList).contains(new String[]{"2021", "Что такое наука и как она работает", "Джеймс Цимринг"});
+                        break;
+                }
+            }
+        }
     }
 }
